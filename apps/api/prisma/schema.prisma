@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+
+  createdAt DateTime @default(now())
+
+  groceryItems GroceryItem[]
+}
+
+model GroceryItem {
+  id            String   @id @default(cuid())
+
+  name          String
+  category      String
+
+  quantity      Float
+  unit          String
+
+  minStockLevel Float
+
+  expiryDate    DateTime?
+
+  createdAt     DateTime @default(now())
+
+  userId String
+  user   User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
