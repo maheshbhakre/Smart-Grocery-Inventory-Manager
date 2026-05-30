@@ -4,10 +4,16 @@ const prisma = require("./config/prisma");
 
 require("dotenv").config();
 
+const authRoutes = require("./routes/authRoutes");
+const groceryRoutes = require("./routes/groceryRoutes");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/auth", authRoutes);
+app.use("/api/grocery", groceryRoutes);
 
 app.get("/", async (req, res) => {
   try {
